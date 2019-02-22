@@ -53,7 +53,10 @@ int main(int argc, char *argv[]){
     printf("rotl(a,3): "); binprint(rotl(a,3)); printf("\n");
     printf("rotr(a,3): "); binprint(rotr(a,3)); printf("\n");
 
-
+    printf("\n------LOTL------\n");
+    printf("     a<<3: "); binprint(a<<3); printf("\n");
+    printf("    a>>29: "); binprint(a>>29); printf("\n");
+    printf("rotl(a,3): "); binprint(rotl(a,3)); printf("\n");
 
 
     return 0;
