@@ -6,6 +6,7 @@
 #include <stdint.h>
 
 //----------Macros-------------
+//macros are used as these are one statement funcs 
 #define ROTLEFT(a,b) (((a) << (b)) | ((a) >> (32-(b))))
 #define ROTRIGHT(a,b) (((a) >> (b)) | ((a) << (32-(b))))
 
@@ -19,7 +20,7 @@
 void sha256();
 
 int main(int argc, char *argv[]){
-    
+    sha256();
     return 0;
 }
 
@@ -50,12 +51,25 @@ void sha256(){
     int t;
     // for loop
     // from page 22, w[t] = m[t] for 0 <= t 15
-    for (t = 0,t < 16; ++t) {
+    for (t = 0; t < 16; ++t) {
         W[t] = M[t];
     }
 
     for (t=16 ; t < 64; ++t){
         SIG1(W[t - 2]) + W[t - 7] + SIG0(W[t - 15]) + W[t - 16];
     }
+
+
+    // intialise a,b,c,d,e,f,g and h as per step 2 page 22
+    a = H[0];
+    b = H[1];
+    c = H[2];
+    d = H[3];
+    e = H[4];
+    f = H[5];
+    g = H[6];
+    h = H[7];
+
+
 
 }
