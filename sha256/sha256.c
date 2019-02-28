@@ -59,7 +59,7 @@ void sha256(){
     };
   
     // the current message block
-    uint32_t M[16];
+    uint32_t M[16] = {0 , 0 , 0 ,0 ,0 ,0 , 0, 0};
 
     int t;
     // for loop
@@ -67,9 +67,11 @@ void sha256(){
     for (t = 0; t < 16; ++t) {
         W[t] = M[t];
     }
-
+    //defines the secuirty of the algorithem 
+    // trying to mix it up 
+    // dificult to undo the operations
     for (t=16 ; t < 64; ++t){
-        SIG1(W[t - 2]) + W[t - 7] + SIG0(W[t - 15]) + W[t - 16];
+       W[t] = SIG1(W[t - 2]) + W[t - 7] + SIG0(W[t - 15]) + W[t - 16];
     }
 
 
@@ -105,4 +107,7 @@ void sha256(){
     H[5] = f + H[5]; 
     H[6] = g + H[6]; 
     H[7] = h + H[7];
+
+
+    printf("%x %x %x %x %x %x %x %x : ",  H[0], H[1], H[2], H[3], H[4], H[5], H[6], H[7]);
  }
