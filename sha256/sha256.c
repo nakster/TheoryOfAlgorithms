@@ -59,9 +59,13 @@ void sha256(){
     };
   
     // the current message block
-    uint32_t M[16] = {0 , 0 , 0 ,0 ,0 ,0 , 0, 0};
+    uint32_t M[16] = {0 , 0 , 0 ,0 ,0 ,0 , 0, 0
+                      , 0, 0, 0, 0, 0, 0, 0, 0
+                      };
+    int i, t;
 
-    int t;
+    //loop through message blocks
+    for(i=0; i < 1; i++){
     // for loop
     // from page 22, w[t] = m[t] for 0 <= t 15
     for (t = 0; t < 16; ++t) {
@@ -107,7 +111,7 @@ void sha256(){
     H[5] = f + H[5]; 
     H[6] = g + H[6]; 
     H[7] = h + H[7];
-
+    }
 
     printf("%x %x %x %x %x %x %x %x : ",  H[0], H[1], H[2], H[3], H[4], H[5], H[6], H[7]);
  }
