@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdint.h>
-
+#include <stdlib.h>
 union msgblock {
  uint8_t e[64];
  uint32_t t[16];
@@ -23,8 +23,12 @@ int main(int argc, char *argv[]) {
      int i =0;
 
      enum status s = READ;
-
-    f = fopen(argv[1], "r");
+    if(argc < 2){
+        puts("No Input file"); 
+        exit(1);
+    }else{
+        f = fopen(argv[1], "r");
+    }
     if(NULL != f){
          while (s == READ) {
             nobytes = fread(M.e, 1, 64, f);
