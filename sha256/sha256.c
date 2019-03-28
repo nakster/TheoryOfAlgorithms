@@ -137,7 +137,7 @@ void sha256(){
     }
 
 
- }//end of sha256 methid
+ }//end of sha256 method
 
  
  int msgblockmethod(int argc, char *argv[]) {
