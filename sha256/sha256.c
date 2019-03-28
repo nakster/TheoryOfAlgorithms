@@ -137,21 +137,29 @@ void sha256(FILE *file){
 		
 		}
 		//4. Compute the ith intermediate hash value H^(i)
-		H[0] = a + H[0];
-		H[1] = b + H[1]; 
-		H[2] = c + H[2]; 
-		H[3] = d + H[3]; 
-		H[4] = e + H[4]; 
-		H[5] = f + H[5]; 
-		H[6] = g + H[6]; 
-		H[7] = h + H[7];
+		// H[0] = a + H[0];
+		// H[1] = b + H[1]; 
+		// H[2] = c + H[2]; 
+		// H[3] = d + H[3]; 
+		// H[4] = e + H[4]; 
+		// H[5] = f + H[5]; 
+		// H[6] = g + H[6]; 
+		// H[7] = h + H[7];
+		H[0] += a;
+		H[1] += b;
+		H[2] += c;
+		H[3] += d;
+		H[4] += e;
+		H[5] += f;
+		H[6] += g;
+		H[7] += h;
     }
 
     if(IS_BIG_ENDIAN){
         printf("%08x %08x %08x %08x %08x %08x %08x %08x : ",  H[0], H[1], H[2], H[3], H[4], H[5], H[6], H[7]);
     }
     else{
-         printf("\n%08x %08x %08x %08x %08x %08x %08x %08x : ",  SWAP_UINT32(H[0]),SWAP_UINT32(H[1]),SWAP_UINT32(H[2]),SWAP_UINT32(H[3]),SWAP_UINT32(H[4]), SWAP_UINT32(H[5]),SWAP_UINT32(H[6]),SWAP_UINT32(H[7]));
+        printf("\n%08x %08x %08x %08x %08x %08x %08x %08x : ",  SWAP_UINT32(H[0]),SWAP_UINT32(H[1]),SWAP_UINT32(H[2]),SWAP_UINT32(H[3]),SWAP_UINT32(H[4]), SWAP_UINT32(H[5]),SWAP_UINT32(H[6]),SWAP_UINT32(H[7]));
     }
 
 
