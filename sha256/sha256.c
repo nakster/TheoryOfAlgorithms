@@ -66,6 +66,10 @@ int main(int argc, char *argv[]){
 }
 
 void sha256(FILE *file){
+	
+	union msgblock M;
+	enum status S = READ;
+	uint64_t nobits = 0;
 
     //message schedule
     uint32_t W[64]; 
@@ -91,7 +95,7 @@ void sha256(FILE *file){
     int i, t;
 
     //loop through message blocks
-    for(i=0; i < 1; i++){
+    while(nextmsgblock(file, &M, &S, &nobits)){
 		// for loop
 		// from page 22, w[t] = m[t] for 0 <= t 15
 		for (t = 0; t < 16; ++t) {
@@ -151,15 +155,10 @@ void sha256(FILE *file){
 
  
 int nextmsgblock(FILE *file, union msgblock *M, enum status *S, int *nobits) {
-	union msgblock M;
+
 	uint64_t nobytes;
-	uint64_t nobits = 0;
-	
 	int i =0;
-
-	enum status s = READ;
 	
-
 	while (s == READ) {
 		nobytes = fread(M.e, 1, 64, file);
 		printf("%llu\n", nobytes);
