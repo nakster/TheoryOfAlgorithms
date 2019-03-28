@@ -176,12 +176,12 @@ int nextmsgblock(FILE *file, union msgblock *M, enum status *S, uint64_t *nobits
 			M->e[i] = 0x00;
 		}
 		//set the last 64 bits to the number of bits in the file 
-		M->s[7] = nobits;
+		M->s[7] = *nobits;
 		// then tell we are finished 
 		*S = FINISH;
 		
 		// if it was pad1 then set the first bit of m to 1
-		if(S == PAD1){
+		if(*S == PAD1){
 			M->e[0] = 0x80;
 		}
 		// you still want the while loop to run another iteration
@@ -207,7 +207,7 @@ int nextmsgblock(FILE *file, union msgblock *M, enum status *S, uint64_t *nobits
 		}
 		//append the file size in bits as 
 		// unsigned 64 bit int
-		M->s[7] = nobits;
+		M->s[7] = *nobits;
 		*S = FINISH;
 	//check if we can put some padding into message block
 	}else if (nobytes < 64){
