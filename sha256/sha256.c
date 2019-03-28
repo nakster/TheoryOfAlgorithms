@@ -30,6 +30,21 @@ static const uint32_t  k[64] = {
     0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2
 };
 
+//union message block 
+union msgblock {
+ uint8_t e[64];
+ uint32_t t[16];
+ uint64_t s[8];
+};
+// enum for the position
+enum status 
+{
+    READ,
+    PAD0,
+    PAD1,
+    FINISH
+};
+
 //methods declared 
 void sha256();
 
@@ -122,4 +137,9 @@ void sha256(){
     }
 
 
- }
+ }//end of sha256 methid
+
+
+
+
+
