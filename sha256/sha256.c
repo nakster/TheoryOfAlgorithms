@@ -18,6 +18,7 @@
 #define SIG1(x) (ROTRIGHT(x,17) ^ ROTRIGHT(x,19) ^ ((x) >> 10))
 #define SWAP_UINT32(x) (((x) >> 24) | (((x) & 0x00FF0000) >> 8) | (((x) & 0x0000FF00) << 8) | ((x) << 24))
 #define IS_BIG_ENDIAN (*(uint16_t *)"\0\xff" < 0x100)
+
 //K = constant value to be used for the iteration t of the hash computation.
 static const uint32_t  k[64] = {
     0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,
@@ -47,13 +48,24 @@ enum status
 
 //methods declared 
 void sha256();
+int nextmsgblock(FILE *file, union msgblock *M, enum status *S, int *nobits); 
 
 int main(int argc, char *argv[]){
-    sha256();
+	
+	FILE *file;
+	file = fopen(argv[1], "r");
+	
+	//this checks if more than 2 args are passed in the running of the programe 
+    if(argc < 2){
+        puts("No Input file"); 
+        exit(1);
+    }else{
+		sha256(file);
+	}
     return 0;
 }
 
-void sha256(){
+void sha256(FILE *file){
 
     //message schedule
     uint32_t W[64]; 
@@ -75,58 +87,56 @@ void sha256(){
     };
   
     // the current message block
-    uint32_t M[16] = {0 , 0 , 0 ,0 ,0 ,0 , 0, 0
-                      , 0, 0, 0, 0, 0, 0, 0, 0
-                      };
+    uint32_t M[16] = {0 , 0 , 0 ,0 ,0 ,0 , 0, 0};
     int i, t;
 
     //loop through message blocks
     for(i=0; i < 1; i++){
-    // for loop
-    // from page 22, w[t] = m[t] for 0 <= t 15
-    for (t = 0; t < 16; ++t) {
-        W[t] = M[t];
-    }
-    //defines the secuirty of the algorithem 
-    // trying to mix it up 
-    // dificult to undo the operations
-    for (t=16 ; t < 64; ++t){
-       W[t] = SIG1(W[t - 2]) + W[t - 7] + SIG0(W[t - 15]) + W[t - 16];
-    }
+		// for loop
+		// from page 22, w[t] = m[t] for 0 <= t 15
+		for (t = 0; t < 16; ++t) {
+			W[t] = M[t];
+		}
+		//defines the secuirty of the algorithem 
+		// trying to mix it up 
+		// dificult to undo the operations
+		for (t=16 ; t < 64; ++t){
+		   W[t] = SIG1(W[t - 2]) + W[t - 7] + SIG0(W[t - 15]) + W[t - 16];
+		}
 
 
-    // intialise a,b,c,d,e,f,g and h as per step 2 page 22
-    a = H[0];
-    b = H[1];
-    c = H[2];
-    d = H[3];
-    e = H[4];
-    f = H[5];
-    g = H[6];
-    h = H[7];
+		// intialise a,b,c,d,e,f,g and h as per step 2 page 22
+		a = H[0];
+		b = H[1];
+		c = H[2];
+		d = H[3];
+		e = H[4];
+		f = H[5];
+		g = H[6];
+		h = H[7];
 
-    for (t = 0; t < 64; t++){
-        T1 = h + EP1(e) + CH(e,f,g) + k[t] + W[t];
-        T2 = EP0(a) + MAJ(a,b,c);
-        h = g;
-        g = f;
-        f = e;
-        e = d + T1;
-        d = c;
-        c = b;
-        b = a;
-        a = T1 + T2;
-    
-    }
-    //4. Compute the ith intermediate hash value H^(i)
-    H[0] = a + H[0];
-    H[1] = b + H[1]; 
-    H[2] = c + H[2]; 
-    H[3] = d + H[3]; 
-    H[4] = e + H[4]; 
-    H[5] = f + H[5]; 
-    H[6] = g + H[6]; 
-    H[7] = h + H[7];
+		for (t = 0; t < 64; t++){
+			T1 = h + EP1(e) + CH(e,f,g) + k[t] + W[t];
+			T2 = EP0(a) + MAJ(a,b,c);
+			h = g;
+			g = f;
+			f = e;
+			e = d + T1;
+			d = c;
+			c = b;
+			b = a;
+			a = T1 + T2;
+		
+		}
+		//4. Compute the ith intermediate hash value H^(i)
+		H[0] = a + H[0];
+		H[1] = b + H[1]; 
+		H[2] = c + H[2]; 
+		H[3] = d + H[3]; 
+		H[4] = e + H[4]; 
+		H[5] = f + H[5]; 
+		H[6] = g + H[6]; 
+		H[7] = h + H[7];
     }
 
     if(IS_BIG_ENDIAN){
@@ -140,16 +150,15 @@ void sha256(){
  }//end of sha256 method
 
  
- int msgblockmethod(int argc, char *argv[]) {
+int nextmsgblock(File *file, union msgblock *M, enum status *S, int *nobits) {
 	union msgblock M;
 	uint64_t nobytes;
 	uint64_t nobits = 0;
-	FILE *f;
+	
 	int i =0;
 
 	enum status s = READ;
-
-	f = fopen(argv[1], "r");
+	
 
 	while (s == READ) {
 		nobytes = fread(M.e, 1, 64, f);
@@ -174,7 +183,7 @@ void sha256(){
 				nobytes = nobytes + 1;
 				M.e[nobytes] = 0x00;
 			}
-		}else if(feof(f)){
+		}else if(feof(file)){
 			 s = PAD1;
 		}
 	} // end loop
@@ -190,7 +199,7 @@ void sha256(){
 		M.e[0] = 0x80;
 	}
 	
-	fclose(f);
+	fclose(file);
 
 	for(int i= 0; i < 64; i++)
 		printf("%x ", M.e[i]);
