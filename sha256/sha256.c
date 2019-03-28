@@ -4,7 +4,7 @@
 #include <stdio.h>
 // provides a set of typedefs that specify exact-width integer types
 #include <stdint.h>
-
+#include <stdlib.h>
 //----------Macros-------------
 //macros are used as these are one statement funcs 
 #define ROTLEFT(a,b) (((a) << (b)) | ((a) >> (32-(b))))
@@ -150,7 +150,7 @@ void sha256(FILE *file){
  }//end of sha256 method
 
  
-int nextmsgblock(File *file, union msgblock *M, enum status *S, int *nobits) {
+int nextmsgblock(FILE *file, union msgblock *M, enum status *S, int *nobits) {
 	union msgblock M;
 	uint64_t nobytes;
 	uint64_t nobits = 0;
@@ -161,7 +161,7 @@ int nextmsgblock(File *file, union msgblock *M, enum status *S, int *nobits) {
 	
 
 	while (s == READ) {
-		nobytes = fread(M.e, 1, 64, f);
+		nobytes = fread(M.e, 1, 64, file);
 		printf("%llu\n", nobytes);
 		nobits = nobits + (nobytes * 8);
 
