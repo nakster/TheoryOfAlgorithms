@@ -148,10 +148,10 @@ void sha256(FILE *file){
     }
 
     if(IS_BIG_ENDIAN){
-        printf("%x %x %x %x %x %x %x %x : ",  H[0], H[1], H[2], H[3], H[4], H[5], H[6], H[7]);
+        printf("%08x %08x %08x %08x %08x %08x %08x %08x : ",  H[0], H[1], H[2], H[3], H[4], H[5], H[6], H[7]);
     }
     else{
-         printf("\n%x %x %x %x %x %x %x %x : ",  SWAP_UINT32(H[0]),SWAP_UINT32(H[1]),SWAP_UINT32(H[2]),SWAP_UINT32(H[3]),SWAP_UINT32(H[4]), SWAP_UINT32(H[5]),SWAP_UINT32(H[6]),SWAP_UINT32(H[7]));
+         printf("\n%08x %08x %08x %08x %08x %08x %08x %08x : ",  SWAP_UINT32(H[0]),SWAP_UINT32(H[1]),SWAP_UINT32(H[2]),SWAP_UINT32(H[3]),SWAP_UINT32(H[4]), SWAP_UINT32(H[5]),SWAP_UINT32(H[6]),SWAP_UINT32(H[7]));
     }
 
 
