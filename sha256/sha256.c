@@ -47,7 +47,7 @@ enum status
 };
 
 //methods declared 
-void sha256();
+void sha256(FILE *file);
 int nextmsgblock(FILE *file, union msgblock *M, enum status *S, uint64_t *nobits); 
 
 int main(int argc, char *argv[]){
@@ -103,8 +103,12 @@ void sha256(FILE *file){
     while(nextmsgblock(file, &M, &S, &nobits)){
 		// for loop
 		// from page 22, w[t] = m[t] for 0 <= t 15
+		
+		// for (i = 0, j = 0; i < 16; ++i, j += 4)
+		// m[i] = (data[j] << 24) | (data[j + 1] << 16) | (data[j + 2] << 8) | (data[j + 3]);
 		for (t = 0; t < 16; ++t) {
-			W[t] = M.th[t];
+			// W[t] = M.th[t];
+			W[t] = SWAP_UINT32(M.th[t]);
 		}
 		//defines the secuirty of the algorithem 
 		// trying to mix it up 
@@ -155,13 +159,14 @@ void sha256(FILE *file){
 		H[7] += h;
     }
 
-    if(IS_BIG_ENDIAN){
-        printf("%08x %08x %08x %08x %08x %08x %08x %08x : ",  H[0], H[1], H[2], H[3], H[4], H[5], H[6], H[7]);
-    }
-    else{
-        printf("\n%08x %08x %08x %08x %08x %08x %08x %08x : ",  SWAP_UINT32(H[0]),SWAP_UINT32(H[1]),SWAP_UINT32(H[2]),SWAP_UINT32(H[3]),SWAP_UINT32(H[4]), SWAP_UINT32(H[5]),SWAP_UINT32(H[6]),SWAP_UINT32(H[7]));
-    }
-
+    // if(IS_BIG_ENDIAN){
+        // printf("%08x %08x %08x %08x %08x %08x %08x %08x : ",  H[0], H[1], H[2], H[3], H[4], H[5], H[6], H[7]);
+    // }
+    // else{
+        // printf("\n%08x %08x %08x %08x %08x %08x %08x %08x : ",  SWAP_UINT32(H[0]),SWAP_UINT32(H[1]),SWAP_UINT32(H[2]),SWAP_UINT32(H[3]),SWAP_UINT32(H[4]), SWAP_UINT32(H[5]),SWAP_UINT32(H[6]),SWAP_UINT32(H[7]));
+    // }
+	
+	printf("%08x %08x %08x %08x %08x %08x %08x %08x : ",  H[0], H[1], H[2], H[3], H[4], H[5], H[6], H[7]);
 
  }//end of sha256 method
 
