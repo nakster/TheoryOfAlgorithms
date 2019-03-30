@@ -60,23 +60,28 @@ int main(int argc, char *argv[]){
 	
 	//open file as argv[1]
 	FILE *file;
-        uint64_t *h;
-
-	file = fopen(argv[1], "r");
+    uint64_t *h;
 	
 	//this checks if more than 2 args are passed in the running of the programe 
     if(argc < 2){
         puts("No Input file! Please Enter File"); 
         exit(1);
     }else{
-                h = sha256(file);
-		// run sha25
-                for(int i =0; i <8 ; i++){
-                    printf("%08x", *(h+i));
-                }
-                printf("\n");
-                //	printf("\n%64x",*h);
-		fclose(file);
+		
+		for(int j =1; j < argc; j++){
+			file = fopen(argv[j], "r");
+			// run sha25
+			// the sha256 returns a pointer to the hash values 
+			h = sha256(file);
+			// loop through the hash and print then=m
+			for(int i =0; i <8 ; i++){
+				printf("%08x ", *(h+i));
+			}
+			printf("\n");
+			//	printf("\n%64x",*h);
+			fclose(file);
+		}
+		
 	}
     return 0;
 }
@@ -163,37 +168,24 @@ uint64_t * sha256(FILE *file){
 		
 		}
 		//4. Compute the ith intermediate hash value H^(i)
-		// H[0] = a + H[0];
-		// H[1] = b + H[1]; 
-		// H[2] = c + H[2]; 
-		// H[3] = d + H[3]; 
-		// H[4] = e + H[4]; 
-		// H[5] = f + H[5]; 
-		// H[6] = g + H[6]; 
-		// H[7] = h + H[7];
-		H[0] += a;
-		H[1] += b;
-		H[2] += c;
-		H[3] += d;
-		H[4] += e;
-		H[5] += f;
-		H[6] += g;
-		H[7] += h;
+		H[0] = a + H[0];
+		H[1] = b + H[1]; 
+		H[2] = c + H[2]; 
+		H[3] = d + H[3]; 
+		H[4] = e + H[4]; 
+		H[5] = f + H[5]; 
+		H[6] = g + H[6]; 
+		H[7] = h + H[7];
+	
     }
 
-    // if(IS_BIG_ENDIAN){
-        // printf("%08x %08x %08x %08x %08x %08x %08x %08x : ",  H[0], H[1], H[2], H[3], H[4], H[5], H[6], H[7]);
-    // }
-    // else{
-        // printf("\n%08x %08x %08x %08x %08x %08x %08x %08x : ",  SWAP_UINT32(H[0]),SWAP_UINT32(H[1]),SWAP_UINT32(H[2]),SWAP_UINT32(H[3]),SWAP_UINT32(H[4]), SWAP_UINT32(H[5]),SWAP_UINT32(H[6]),SWAP_UINT32(H[7]));
-    // }
-        
-        for(i = 0; i < 8; i++){
-            Har[i] = H[i];      
-        }
-
-        return Har;
-//	printf("%08x %08x %08x %08x %08x %08x %08x %08x : ",  H[0], H[1], H[2], H[3], H[4], H[5], H[6], H[7]);
+	// this here adds the H values to Har 
+	for(i = 0; i < 8; i++){
+		//add the 8 hashed values to the new mallocked array 
+		Har[i] = H[i];      
+	}
+	//return the array which holds the values from the array
+	return Har;
 
  }//end of sha256 method
 
