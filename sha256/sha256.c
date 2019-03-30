@@ -5,6 +5,7 @@
 // provides a set of typedefs that specify exact-width integer types
 #include <stdint.h>
 #include <stdlib.h>
+
 //----------Macros-------------
 //macros are used as these are one statement funcs 
 #define ROTLEFT(a,b) (((a) << (b)) | ((a) >> (32-(b))))
@@ -74,7 +75,7 @@ int main(int argc, char *argv[]){
                     printf("%08x", *(h+i));
                 }
                 printf("\n");
-    	//	printf("\n%64x",*h);
+                //	printf("\n%64x",*h);
 		fclose(file);
 	}
     return 0;
