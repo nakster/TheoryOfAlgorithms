@@ -225,7 +225,8 @@ int nextmsgblock(FILE *file, union msgblock *M, enum status *S, uint64_t *nobits
 		}
 		//append the file size in bits as 
 		// unsigned 64 bit int
-		M->s[7] = SWAP_UINT64(*nobits);
+		M->s[7] = SWAP_UINT64(*nobits);     
+		M -> s [7] = ENDIAN_SWAP_UINT64(M -> s [7]);
 		*S = FINISH;
 	//check if we can put some padding into message block
 	}else if (nobytes < 64){
