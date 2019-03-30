@@ -5,6 +5,7 @@
 // provides a set of typedefs that specify exact-width integer types
 #include <stdint.h>
 #include <stdlib.h>
+#include <string.h>
 
 //----------Macros-------------
 //macros are used as these are one statement funcs 
@@ -60,7 +61,7 @@ int main(int argc, char *argv[]){
 	
 	//open file as argv[1]
 	FILE *file;
-    uint64_t *h;
+        uint64_t *h;
 	
 	//this checks if more than 2 args are passed in the running of the programe 
     if(argc < 2){
@@ -68,9 +69,35 @@ int main(int argc, char *argv[]){
         exit(1);
     }else{
 		// this here check if the first argument is s 
-		// if it is s then that means the user entered a string 
-		if(argv[1] == "s" || argv[1] == "S"){
-			printf("Strings %s", argv[2]);
+		// if it is s then that means the user entered a string
+
+		if(strcmp(argv[1], "s")==0){
+			printf("The Hash of The String %s\n", argv[2]);
+                        //open the file if not exists then make one
+                        FILE *fp = fopen("test.txt", "w");
+                        //if the file is not created then exit 
+                        if(fp == NULL)
+                        {
+                            /* File not created hence exit */
+                            printf("Unable to create file.\n");
+                            exit(EXIT_FAILURE);
+                        }else{
+                            //if the file is created then write the string to it 
+                            fprintf(fp,"%s",argv[2]);
+                            fclose(fp);
+
+                            // now hash the the string that we saved to the file 
+                            //
+                            FILE *fp = fopen("test.txt", "r");
+                            h = sha256(fp);
+                            for(int i =0; i <8 ; i++){
+                                //print the hash
+                                printf("%08x ", *(h+i));
+                            }
+
+                        }
+
+
 		}else{
 			for(int j =1; j < argc; j++){
 				//check if file exists 
