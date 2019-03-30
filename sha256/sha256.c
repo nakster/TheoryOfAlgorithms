@@ -78,12 +78,12 @@ int main(int argc, char *argv[]){
 			for(int i =0; i <8 ; i++){
 				printf("%08x ", *(h+i));
 			}
-			printf("\n");
+			printf("\n\n");
 			//	printf("\n%64x",*h);
 			fclose(file);
 		}
 		
-	}
+	}// end of else
     return 0;
 }
 
@@ -230,7 +230,7 @@ int nextmsgblock(FILE *file, union msgblock *M, enum status *S, uint64_t *nobits
 	// if we read less then 56 bytes
 	// we can put all the padding in this message block
 	if(nobytes < 56){
-		printf("I've Found a block with less then 55 bytes\n");
+		//printf("I've Found a block with less then 55 bytes\n");
 		//add the 1 bit as per standard 
 		M->e[nobytes] = 0x80;
 		// add zero its until the last 64bits 
