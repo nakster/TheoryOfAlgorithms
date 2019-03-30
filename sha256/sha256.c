@@ -52,13 +52,15 @@ enum status
 };
 
 //methods declared 
-void sha256(FILE *file);
+uint64_t * sha256(FILE *file);
 int nextmsgblock(FILE *file, union msgblock *M, enum status *S, uint64_t *nobits); 
 
 int main(int argc, char *argv[]){
 	
 	//open file as argv[1]
 	FILE *file;
+        uint64_t *h;
+
 	file = fopen(argv[1], "r");
 	
 	//this checks if more than 2 args are passed in the running of the programe 
@@ -66,14 +68,19 @@ int main(int argc, char *argv[]){
         puts("No Input file! Please Enter File"); 
         exit(1);
     }else{
-		// run sha256
-		sha256(file);
+                h = sha256(file);
+		// run sha25
+                for(int i =0; i <8 ; i++){
+                    printf("%08x", *(h+i));
+                }
+                printf("\n");
+    	//	printf("\n%64x",*h);
 		fclose(file);
 	}
     return 0;
 }
 
-void sha256(FILE *file){
+uint64_t * sha256(FILE *file){
 	//current message block
 	union msgblock M;
 	//number of bits read from file
@@ -87,6 +94,8 @@ void sha256(FILE *file){
     uint32_t a, b, c, d, e, f, g, h;
      // two temp variables 
     uint32_t T1, T2; 
+
+    uint64_t *Har = malloc(sizeof(uint64_t[8]));
   
     // the hash value 
     uint32_t H[8] = {
@@ -170,8 +179,13 @@ void sha256(FILE *file){
     // else{
         // printf("\n%08x %08x %08x %08x %08x %08x %08x %08x : ",  SWAP_UINT32(H[0]),SWAP_UINT32(H[1]),SWAP_UINT32(H[2]),SWAP_UINT32(H[3]),SWAP_UINT32(H[4]), SWAP_UINT32(H[5]),SWAP_UINT32(H[6]),SWAP_UINT32(H[7]));
     // }
-	
-	printf("%08x %08x %08x %08x %08x %08x %08x %08x : ",  H[0], H[1], H[2], H[3], H[4], H[5], H[6], H[7]);
+        
+        for(i = 0; i < 8; i++){
+            Har[i] = H[i];      
+        }
+
+        return Har;
+//	printf("%08x %08x %08x %08x %08x %08x %08x %08x : ",  H[0], H[1], H[2], H[3], H[4], H[5], H[6], H[7]);
 
  }//end of sha256 method
 
