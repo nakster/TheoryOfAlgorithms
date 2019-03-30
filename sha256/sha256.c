@@ -69,18 +69,21 @@ int main(int argc, char *argv[]){
     }else{
 		
 		for(int j =1; j < argc; j++){
-			file = fopen(argv[j], "r");
-                        printf("The Hash of File %s\n", argv[j]);
-			// run sha25
-			// the sha256 returns a pointer to the hash values 
-			h = sha256(file);
-			// loop through the hash and print then=m
-			for(int i =0; i <8 ; i++){
+			if(file = fopen(argv[j], "r")){
+				printf("The Hash of File %s\n", argv[j]);
+				// run sha25
+				// the sha256 returns a pointer to the hash values 
+				h = sha256(file);
+				// loop through the hash and print then=m
+				for(int i =0; i <8 ; i++){
 				printf("%08x ", *(h+i));
+				}
+				printf("\n\n");
+				//	printf("\n%64x",*h);
+				fclose(file);
+			}else{
+				 puts("Sorry The File Given Does Not Exist"); 
 			}
-			printf("\n\n");
-			//	printf("\n%64x",*h);
-			fclose(file);
 		}
 		
 	}// end of else
