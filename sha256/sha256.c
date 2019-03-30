@@ -67,22 +67,30 @@ int main(int argc, char *argv[]){
         puts("No Input file! Please Enter File"); 
         exit(1);
     }else{
-		
-		for(int j =1; j < argc; j++){
-			if(file = fopen(argv[j], "r")){
-				printf("The Hash of File %s\n", argv[j]);
-				// run sha25
-				// the sha256 returns a pointer to the hash values 
-				h = sha256(file);
-				// loop through the hash and print then=m
-				for(int i =0; i <8 ; i++){
-				printf("%08x ", *(h+i));
+		// this here check if the first argument is s 
+		// if it is s then that means the user entered a string 
+		if(argv[1] == "s" || argv[1] == "S"){
+			printf("Strings %s", argv[2]);
+		}else{
+			for(int j =1; j < argc; j++){
+				//check if file exists 
+				if(file = fopen(argv[j], "r")){
+					printf("The Hash of File %s\n", argv[j]);
+					// run sha25
+					// the sha256 returns a pointer to the hash values 
+					h = sha256(file);
+					// loop through the hash and print them
+					for(int i =0; i <8 ; i++){
+						//print the hash
+						printf("%08x ", *(h+i));
+					}
+					printf("\n\n");
+					//close the file after opening
+					fclose(file);
+				}else{
+					// if the file doesnt exist then print this out 
+					printf("Sorry The File %s Given Does Not Exist\n", argv[j]); 
 				}
-				printf("\n\n");
-				//	printf("\n%64x",*h);
-				fclose(file);
-			}else{
-				 puts("Sorry The File Given Does Not Exist"); 
 			}
 		}
 		
