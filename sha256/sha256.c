@@ -72,9 +72,12 @@ int main(int argc, char *argv[]){
 		// if it is s then that means the user entered a string
 		// check if the user enters s for comparing a string 
 		if(strcmp(argv[1], "s")==0 || strcmp(argv[1], "S")==0){
-			printf("The Hash of The String %s\n", argv[2]);
 			
+			// for loop to hash multiple strings 
 			for(int i = 2; i < argc; i++){
+				//print what string is being hashed 
+				printf("The Hash of The String %s\n", argv[i]);
+				
 				//open the file if not exists then make one
 				FILE *fp = fopen("test.txt", "w");
 				//if the file is not created then exit 
@@ -98,6 +101,7 @@ int main(int argc, char *argv[]){
 						//print the hash
 						printf("%08x ", *(h+i));
 					}
+					printf("\n\n");
 					// close the file after reading
 					fclose(fp);
 				}
