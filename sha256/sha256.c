@@ -123,7 +123,14 @@ uint64_t * sha256(FILE *file){
 		// m[i] = (data[j] << 24) | (data[j + 1] << 16) | (data[j + 2] << 8) | (data[j + 3]);
 		for (t = 0; t < 16; ++t) {
 			// W[t] = M.th[t];
-			W[t] = SWAP_UINT32(M.th[t]);
+			//check if its big endian 
+			if(IS_BIG_ENDIAN){
+				// dont need to convert to big endian if already big endian.
+				W[t] = M.th[t];
+			}else{
+				//unless it is little endian then swap the data 
+				W[t] = SWAP_UINT32(M.th[t]);
+			}
 		}
 		//defines the secuirty of the algorithem 
 		// trying to mix it up 
@@ -240,7 +247,15 @@ int nextmsgblock(FILE *file, union msgblock *M, enum status *S, uint64_t *nobits
 		}
 		//append the file size in bits as 
 		// unsigned 64 bit int  
-		M -> s [7] = SWAP_UINT64(*nobits);
+		//check if its big endian 
+		if(IS_BIG_ENDIAN){
+			// dont need to convert to big endian if already big endian.
+			M -> s [7] = *nobits;
+		}else{
+			//else swap it to big endian
+			M -> s [7] = SWAP_UINT64(*nobits);
+		}
+		//finished
 		*S = FINISH;
 	//check if we can put some padding into message block
 	}else if (nobytes < 64){
