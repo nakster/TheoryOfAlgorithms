@@ -70,6 +70,7 @@ int main(int argc, char *argv[]){
 		
 		for(int j =1; j < argc; j++){
 			file = fopen(argv[j], "r");
+                        printf("The Hash of File %s\n", argv[j]);
 			// run sha25
 			// the sha256 returns a pointer to the hash values 
 			h = sha256(file);
