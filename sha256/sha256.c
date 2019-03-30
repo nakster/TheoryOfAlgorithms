@@ -18,6 +18,11 @@
 #define SIG1(x) (ROTRIGHT(x,17) ^ ROTRIGHT(x,19) ^ ((x) >> 10))
 #define SWAP_UINT32(x) (((x) >> 24) | (((x) & 0x00FF0000) >> 8) | (((x) & 0x0000FF00) << 8) | ((x) << 24))
 #define IS_BIG_ENDIAN (*(uint16_t *)"\0\xff" < 0x100)
+#define SWAP_UINT64(val) \
+( (((val) >> 56) & 0x00000000000000FF) | (((val) >> 40) & 0x000000000000FF00) | \
+  (((val) >> 24) & 0x0000000000FF0000) | (((val) >>  8) & 0x00000000FF000000) | \
+  (((val) <<  8) & 0x000000FF00000000) | (((val) << 24) & 0x0000FF0000000000) | \
+  (((val) << 40) & 0x00FF000000000000) | (((val) << 56) & 0xFF00000000000000) )
 
 //K = constant value to be used for the iteration t of the hash computation.
 static const uint32_t  k[64] = {
@@ -220,7 +225,7 @@ int nextmsgblock(FILE *file, union msgblock *M, enum status *S, uint64_t *nobits
 		}
 		//append the file size in bits as 
 		// unsigned 64 bit int
-		M->s[7] = *nobits;
+		M->s[7] = SWAP_UINT64(*nobits);
 		*S = FINISH;
 	//check if we can put some padding into message block
 	}else if (nobytes < 64){
