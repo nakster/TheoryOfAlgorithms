@@ -166,6 +166,26 @@ To ensure that the Message Block has length multiple of 512 bits:
   are added at the end of the message.The message shall always be padded, even if the initial length is already a multiple of 512.
  - For example, the (8-bit ASCII) message “abc” has length 8x3 = 24, so the message is padded with a one bit
  - then 448 - (24 + 1) = 423 zero bits, and then the message length, to become the 512-bit padded message
+ 
+ ```C
+ 
+M->e[nobytes] = 0x80;
+// add zero its until the last 64bits 
+while(nobytes < 56){
+    nobytes = nobytes + 1;
+    M->e[nobytes] = 0x00;
+}
+//append the file size in bits as 
+// unsigned 64 bit int  
+//check if its big endian 
+if(IS_BIG_ENDIAN){
+    // dont need to convert to big endian if already big endian.
+    M -> s [7] = *nobits;
+}else{
+    //else swap it to big endian
+    M -> s [7] = SWAP_UINT64(*nobits);
+}
+ ```
 
 ### Block decomposition
 For each block M ∈ {0, 1}^512, 64 words of 32 bits each are constructed as follows:
@@ -196,7 +216,7 @@ for (t=16 ; t < 64; ++t){
  
 ### Hash computation
 
--  SHA-256, eight variables are set to their initial values, in hex:
+-  SHA-256,First Set Eight variables to their initial values, in hex
 
 ```C
  uint32_t H[8] = {
@@ -213,12 +233,67 @@ for (t=16 ; t < 64; ++t){
 // These words were obtained by taking the first thirty-two bits of the fractional parts of the square roots of the first eight prime 
 // numbers
 ```
+- Next, the blocks M(1), M(2), . . . , M(N) are processed one at a time
+
+```C
+a = H[0];
+b = H[1];
+c = H[2];
+d = H[3];
+e = H[4];
+f = H[5];
+g = H[6];
+h = H[7];
+
+//do 64 rounds consisting of
+for (t = 0; t < 64; t++){
+    T1 = h + EP1(e) + CH(e,f,g) + k[t] + W[t];
+    T2 = EP0(a) + MAJ(a,b,c);
+    h = g;
+    g = f;
+    f = e;
+    e = d + T1;
+    d = c;
+    c = b;
+    b = a;
+    a = T1 + T2;
+
+}
+
+//4. Compute the ith intermediate hash value H^(i)
+H[0] = a + H[0];
+H[1] = b + H[1]; 
+H[2] = c + H[2]; 
+H[3] = d + H[3]; 
+H[4] = e + H[4]; 
+H[5] = f + H[5]; 
+H[6] = g + H[6]; 
+H[7] = h + H[7];
+
+```
+
+- Lastly The hash of the message is the concatenation of the variables H^(i) after the last block has been processed
+
+```C
+uint64_t * sha256(FILE *file){
+
+    uint64_t *Har = malloc(sizeof(uint64_t[8]));
+    // pseudo code
+    for(...){
+        H[i] = Har[i];    
+    }
+
+    return Har;
+}
+
+```
 
 ## Technologies Used
 
 * Procedural Programming
 * Google Cloud
 * GitHub
+* Openssl 
 
 ## Authors
 
