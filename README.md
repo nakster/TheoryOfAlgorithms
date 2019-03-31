@@ -17,7 +17,7 @@ A Good Hashing Algorithm Has The Following Properties
 - It is computationally unfeasible to extract message information from its hash
 - A small (1 bit) change in the message will produce a huge change in the hash.
 
-## C
+### C
 
 <p align="center"> 
 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-SFgXIDffcVPHjFqBX53OorNfz44U28G1KaYOHorC_0tqk8UjHg"/>
@@ -57,6 +57,65 @@ uint64_t * sha256(FILE *file){
     printf("%08x ", *(h+i));
   }
   
+```
+## Getting Started
+
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+
+### Prerequisites
+
+To run the SHA256 Hashing Algorithm Install the Following to your Machine</br>
+
+```bash
+For Windows Install MinGW From http://www.mingw.org/
+```
+```bash
+For Linux Run 
+sudo apt-get install build-essential
+```
+
+
+### Installing
+
+#### 1. Clone My Repo
+
+Inside Your Bash/Terminal Copy And Paste This
+```bash
+Git clone https://github.com/nakster/TheoryOfAlgorithms.git
+```
+#### 2. Change Into the Directory
+
+```bash
+cd "Location\TheoryOfAlgorithms"
+```
+
+#### 3. Compile SHA256 
+
+```bash
+gcc -o sha256 sha256.c
+```
+#### 4. Run SHA256
+- You can Hash a File or A String
+- To Hash A File Run This
+- You can Hash Multiple Files
+
+```bash
+./sha256 <name of file>
+
+Hash Multiple Files
+./sha256 <name of file> <name of file> .... 
+
+```
+- To Hash A String Run This
+- The First ARG Must be S/s And Then The String You'd Like To Hash
+- You can Hash Multiple Strings
+
+```bash
+./sha256 S abc
+
+Hash Multiple Strings
+./sha256 S "String .." "String .." ....
+    
 ```
 
 
