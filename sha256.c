@@ -61,7 +61,7 @@ int main(int argc, char *argv[]){
 	
 	//open file as argv[1]
 	FILE *file;
-    uint64_t *h;
+        uint64_t *h;
 	
 	//this checks if more than 2 args are passed in the running of the programe 
     if(argc < 2){
@@ -113,6 +113,7 @@ int main(int argc, char *argv[]){
 				puts("\nSorry No String Was Entered Try Again.\n");
 			}
 		}else{
+                        printf("\n");
 			for(int j =1; j < argc; j++){
 				//check if file exists 
 				if(file = fopen(argv[j], "r")){
