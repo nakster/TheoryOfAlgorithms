@@ -280,13 +280,26 @@ uint64_t * sha256(FILE *file){
     uint64_t *Har = malloc(sizeof(uint64_t[8]));
     // pseudo code
     for(...){
-        H[i] = Har[i];    
+        Har[i] = H[i];    
     }
 
     return Har;
 }
 
 ```
+
+## Extra 
+
+- File Handling Errors 
+
+- CHecks if Its big endian
+
+- Takes Strings and Handles Errors
+
+- Using Macros
+
+- Using Malloc 
+
 
 ## Technologies Used
 
