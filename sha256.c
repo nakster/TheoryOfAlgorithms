@@ -73,7 +73,7 @@ int main(int argc, char *argv[]){
 		// check if the user enters s for hashing a string 
 		if(strcmp(argv[1], "s")==0 || strcmp(argv[1], "S")==0){
 			//check if a string was entered 
-			if(if argc > 2){
+			if(argc > 2){
 				printf("\n");
 				// for loop to hash multiple strings 
 				for(int i = 2; i < argc; i++){
