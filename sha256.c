@@ -61,7 +61,7 @@ int main(int argc, char *argv[]){
 	
 	//open file as argv[1]
 	FILE *file;
-        uint64_t *h;
+    uint64_t *h;
 	
 	//this checks if more than 2 args are passed in the running of the programe 
     if(argc < 2){
@@ -70,7 +70,7 @@ int main(int argc, char *argv[]){
     }else{
 		// this here check if the first argument is s 
 		// if it is s then that means the user entered a string
-		// check if the user enters s for comparing a string 
+		// check if the user enters s for hashing a string 
 		if(strcmp(argv[1], "s")==0 || strcmp(argv[1], "S")==0){
 			
 			// for loop to hash multiple strings 
@@ -314,15 +314,11 @@ int nextmsgblock(FILE *file, union msgblock *M, enum status *S, uint64_t *nobits
 		*S = PAD1;
 	}
 
+	// this is for bebugging 
 	// for(int i= 0; i < 64; i++)
 		// printf("%x ", M->e[i]);
 		// printf("\n");
 		
 	// return 1 so function is called again 
-
 	return 1;
 } // end main
-
-
-
-
