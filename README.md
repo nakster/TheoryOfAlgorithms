@@ -77,24 +77,20 @@ sudo apt-get install build-essential
 
 ### Installing
 
-#### 1. Clone My Repo
+#### Clone My Repo
 
 Inside Your Bash/Terminal Copy And Paste This
 ```bash
 Git clone https://github.com/nakster/TheoryOfAlgorithms.git
-```
-#### 2. Change Into the Directory
 
-```bash
+Change Into the Directory
 cd "Location\TheoryOfAlgorithms"
-```
 
-#### 3. Compile SHA256 
-
-```bash
+Compile SHA256 
 gcc -o sha256 sha256.c
+
 ```
-#### 4. Run SHA256
+#### Run SHA256
 - You can Hash a File or A String
 - To Hash A File Run This
 - You can Hash Multiple Files
@@ -106,9 +102,12 @@ Hash Multiple Files
 ./sha256 <name of file> <name of file> .... 
 
 ```
+![](https://github.com/nakster/gif/blob/master/testfile.PNG)
+
 - To Hash A String Run This
-- The First ARG Must be S/s And Then The String You'd Like To Hash
+- The First Argument Must be S/s And Then The String You'd Like To Hash
 - You can Hash Multiple Strings
+
 
 ```bash
 ./sha256 S abc
@@ -117,6 +116,11 @@ Hash Multiple Strings
 ./sha256 S "String .." "String .." ....
     
 ```
+
+![](https://github.com/nakster/gif/blob/master/teststring.PNG)
+
+
+
 
 
 
