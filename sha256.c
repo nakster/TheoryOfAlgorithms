@@ -72,39 +72,45 @@ int main(int argc, char *argv[]){
 		// if it is s then that means the user entered a string
 		// check if the user enters s for hashing a string 
 		if(strcmp(argv[1], "s")==0 || strcmp(argv[1], "S")==0){
-			
-			// for loop to hash multiple strings 
-			for(int i = 2; i < argc; i++){
-				//print what string is being hashed 
-				printf("The Hash of The String %s\n", argv[i]);
-				
-				//open the file if not exists then make one
-				FILE *fp = fopen("test.txt", "w");
-				//if the file is not created then exit 
-				if(fp == NULL)
-				{
-					// File not created hence exit
-					printf("Unable to create file.\n");
-					exit(EXIT_FAILURE);
-				}else{				
-					//if the file is created then write the string to it 
-					fprintf(fp,"%s",argv[i]);
-					fclose(fp);
+			//check if a string was entered 
+			if(if argc > 2){
+				printf("\n");
+				// for loop to hash multiple strings 
+				for(int i = 2; i < argc; i++){
+					//print what string is being hashed 
+					printf("The Hash of The String %s\n", argv[i]);
 					
-					// now hash the the string that we saved to the file 
-					//open the file this time to r 
-					FILE *fp = fopen("test.txt", "r");
-					// run the sha256 
-					h = sha256(fp);
-					// print the hash values 
-					for(int i =0; i <8 ; i++){
-						//print the hash
-						printf("%08x ", *(h+i));
+					//open the file if not exists then make one
+					FILE *fp = fopen("test.txt", "w");
+					//if the file is not created then exit 
+					if(fp == NULL)
+					{
+						// File not created hence exit
+						printf("Unable to create file.\n");
+						exit(EXIT_FAILURE);
+					}else{				
+						//if the file is created then write the string to it 
+						fprintf(fp,"%s",argv[i]);
+						fclose(fp);
+						
+						// now hash the the string that we saved to the file 
+						//open the file this time to r 
+						FILE *fp = fopen("test.txt", "r");
+						// run the sha256 
+						h = sha256(fp);
+						// print the hash values 
+						for(int i =0; i <8 ; i++){
+							//print the hash
+							printf("%08x ", *(h+i));
+						}
+						printf("\n\n");
+						// close the file after reading
+						fclose(fp);
 					}
-					printf("\n\n");
-					// close the file after reading
-					fclose(fp);
 				}
+			}else{
+				//if the string was not entered then print this out 
+				puts("\nSorry No String Was Entered Try Again.\n");
 			}
 		}else{
 			for(int j =1; j < argc; j++){
