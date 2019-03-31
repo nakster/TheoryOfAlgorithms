@@ -17,8 +17,6 @@ A Good Hashing Algorithm Has The Following Properties
 - It is computationally unfeasible to extract message information from its hash
 - A small (1 bit) change in the message will produce a huge change in the hash.
 
-### C
-
 <p align="center"> 
 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-SFgXIDffcVPHjFqBX53OorNfz44U28G1KaYOHorC_0tqk8UjHg"/>
 </p>
@@ -92,8 +90,7 @@ gcc -o sha256 sha256.c
 ```
 #### Run SHA256
 - You can Hash a File or A String
-- To Hash A File Run This
-- You can Hash Multiple Files
+- To Hash A File Run This(You can Hash Multiple Files)
 
 ```bash
 ./sha256 <name of file>
@@ -105,8 +102,7 @@ Hash Multiple Files
 ![](https://github.com/nakster/gif/blob/master/testfile.PNG)
 
 - To Hash A String Run This
-- The First Argument Must be S/s And Then The String You'd Like To Hash
-- You can Hash Multiple Strings
+- The First Argument Must be S/s And Then The String You'd Like To Hash(You can Hash Multiple Strings)
 
 
 ```bash
@@ -119,9 +115,18 @@ Hash Multiple Strings
 
 ![](https://github.com/nakster/gif/blob/master/teststring.PNG)
 
+## Implentation
 
+## Technologies Used
 
+* Procedural Programming
+* Google Cloud
+* GitHub
 
+## Authors
 
+* **Naqi Ahmad**
 
+## License
 
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
