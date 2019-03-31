@@ -291,14 +291,52 @@ uint64_t * sha256(FILE *file){
 ## Extra 
 
 - File Handling Errors 
+![](https://github.com/nakster/gif/blob/master/fileerrorhandling.PNG)
 
-- CHecks if Its big endian
-
+- Checks if Its big endian and converts to Big endian if Little Endian
+```C
+#define IS_BIG_ENDIAN (*(uint16_t *)"\0\xff" < 0x100)
+```
 - Takes Strings and Handles Errors
+![](https://github.com/nakster/gif/blob/master/teststring.PNG)
 
 - Using Macros
 
-- Using Malloc 
+```C
+#define ROTLEFT(a,b) (((a) << (b)) | ((a) >> (32-(b))))
+#define ROTRIGHT(a,b) (((a) >> (b)) | ((a) << (32-(b))))
+
+#define CH(x,y,z) (((x) & (y)) ^ (~(x) & (z)))
+#define MAJ(x,y,z) (((x) & (y)) ^ ((x) & (z)) ^ ((y) & (z)))
+#define EP0(x) (ROTRIGHT(x,2) ^ ROTRIGHT(x,13) ^ ROTRIGHT(x,22))
+#define EP1(x) (ROTRIGHT(x,6) ^ ROTRIGHT(x,11) ^ ROTRIGHT(x,25))
+#define SIG0(x) (ROTRIGHT(x,7) ^ ROTRIGHT(x,18) ^ ((x) >> 3))
+#define SIG1(x) (ROTRIGHT(x,17) ^ ROTRIGHT(x,19) ^ ((x) >> 10))
+```
+
+- Using Malloc And Pointers 
+
+```C
+uint64_t * sha256(FILE *file){
+
+    uint64_t *Har = malloc(sizeof(uint64_t[8]));
+    // Code
+
+    return Har;
+}
+
+```
+## Testing
+
+The Above code hashes strings and files correctly. I used openssl and testing vectors to compare the values returned by sha256.
+
+- Test 1 abc 
+![](https://github.com/nakster/gif/blob/master/abc.PNG)
+![](https://github.com/nakster/gif/blob/master/shaabc.PNG)
+
+- Test 2 Empty String
+![](https://github.com/nakster/gif/blob/master/empty.PNG)
+![](https://github.com/nakster/gif/blob/master/vector256.PNG)
 
 
 ## Technologies Used
