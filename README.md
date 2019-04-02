@@ -346,6 +346,15 @@ The Above code hashes strings and files correctly. I used openssl and testing ve
 * GitHub
 * Openssl 
 
+## Links 
+[C Dynamic Memory Allocation](https://www.programiz.com/c-programming/c-dynamic-memory-allocation) </br>
+[Endian Byte Order](http://www.yolinux.com/TUTORIALS/Endian-Byte-Order.html) </br>
+[convert-big-endian-to-little-endian](https://stackoverflow.com/questions/2182002/convert-big-endian-to-little-endian-in-c-without-using-provided-func) </br>
+[Covert to 64 Big Endian](https://ubuntuforums.org/showthread.php?t=1190710) </br>
+[Error Handling](https://www.tutorialspoint.com/cprogramming/c_error_handling.htm) </br>
+[Is Big Endian](http://esr.ibiblio.org/?p=5095)</br>
+
+
 ## Authors
 
 * **Naqi Ahmad**
